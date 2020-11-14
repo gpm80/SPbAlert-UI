@@ -16,40 +16,44 @@ class SelectScatter extends StatefulWidget {
 }
 
 class SelectScatterState extends State<SelectScatter> {
-  int _selected = 10;
+  int _selected = 6;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
-          child: Text('Группировка по локации'),
+          child: new Text(
+            'Группировка по локации',
+            style:
+                DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.2),
+          ),
           padding: EdgeInsets.only(top: 10),
         ),
         RadioListTile(
-          value: 12,
+          value: 10,
           title: Text("Подробный"),
           groupValue: _selected,
           activeColor: Colors.red,
           onChanged: _onSelect,
         ),
         RadioListTile(
-          value: 10,
-          title: Text("Средний"),
+          value: 7,
+          title: Text("+-200 м"),
           groupValue: _selected,
           activeColor: Colors.yellow,
           onChanged: _onSelect,
         ),
         RadioListTile(
-          value: 9,
-          title: Text("Общий"),
+          value: 6,
+          title: Text("+- 600 м"),
           groupValue: _selected,
           activeColor: Colors.green,
           onChanged: _onSelect,
         ),
         RadioListTile(
-          value: 7,
-          title: Text("Обширный"),
+          value: 4,
+          title: Text("+-20 км"),
           groupValue: _selected,
           activeColor: Colors.blue,
           onChanged: _onSelect,

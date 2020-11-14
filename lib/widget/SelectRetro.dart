@@ -22,7 +22,11 @@ class SelectRetroState extends State<SelectRetro> {
     return Column(
       children: <Widget>[
         Container(
-          child: Text('Диапазон анализа'),
+          child: new Text(
+            'Время анализа',
+            style:
+                DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.2),
+          ),
           padding: EdgeInsets.only(top: 10),
         ),
         RadioListTile(
