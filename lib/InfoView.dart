@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:alert/ViewListResult.dart';
+import 'package:alert/widget/SelectRetro.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -15,10 +16,10 @@ class InfoView extends StatefulWidget {
 }
 
 class InfoViewState extends State<InfoView> {
-  final _formKey = GlobalKey<FormState>();
   var _dateTextController = new TextEditingController();
   List<GroupInfo> _listResult = new List<GroupInfo>();
   SelectScatter _selectScatter = new SelectScatter();
+  SelectRetro _selectRetro = new SelectRetro();
   DateTime _selectedDate;
 
   /// Конструктор
@@ -31,14 +32,13 @@ class InfoViewState extends State<InfoView> {
   Widget build(BuildContext context) {
     _dateTextController.text = _formatDate(_selectedDate);
     return Container(
-        child: Column(
+        child: Row(
       children: [
-        Form(
-          key: _formKey,
-          child: Row(
+        Expanded(
+          flex: 30,
+          child: Column(
             children: [
-              Expanded(
-                  child: TextFormField(
+              TextFormField(
                 decoration: InputDecoration(
                     labelText: 'Дата', icon: Icon(Icons.date_range)),
                 onTap: () {
@@ -46,26 +46,25 @@ class InfoViewState extends State<InfoView> {
                 },
                 readOnly: true,
                 controller: _dateTextController,
-              )),
+              ),
+              _selectScatter,
+              _selectRetro,
               RaisedButton(
                   child: Text('Получить'),
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      _fetchGroupInfo(
-                          _selectedDate, _selectScatter.getSelected());
-                    }
+                    _fetchGroupInfo(_selectedDate, _selectScatter.getSelected(),
+                        _selectRetro.getSelected());
                   })
             ],
           ),
         ),
-        _selectScatter,
-        Expanded(child: ViewListResult(_listResult))
+        Expanded(flex: 70, child: ViewListResult(_listResult))
       ],
     ));
   }
 
   /// Получает данные
-  _fetchGroupInfo(DateTime dateTime, int scatter) {
+  _fetchGroupInfo(DateTime dateTime, int scatter, int retro) {
     print('request: scatter $scatter time: $dateTime');
     String uri = 'http://localhost:8080/info/get';
     var _header = {
@@ -76,7 +75,7 @@ class InfoViewState extends State<InfoView> {
     var _body = jsonEncode({
       'scatter': scatter,
       'timePoint': dateTime.toIso8601String(),
-      'retroHour': 24
+      'retroHour': retro
     });
     http.post(uri, headers: _header, body: _body).then((value) {
       print(value.body);

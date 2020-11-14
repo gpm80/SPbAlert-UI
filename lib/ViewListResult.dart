@@ -9,7 +9,11 @@ class ViewListResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) {
-      return Text('Пусто');
+      return Center(
+          child: Text(
+        "Нет данных",
+        textAlign: TextAlign.center,
+      ));
     }
     return ListView.builder(
       itemBuilder: (context, index) => _makeItem(context, items[index]),
@@ -19,8 +23,12 @@ class ViewListResult extends StatelessWidget {
 
   Widget _makeItem(BuildContext context, GroupInfo groupInfo) {
     return ListTile(
+      leading: CircleAvatar(
+//        backgroundImage: AssetImage('graphics/fire.png'),
+        backgroundColor: Colors.red,
+      ),
       title: Text(groupInfo.types.join(", ")),
-      subtitle: Text(groupInfo.geoHash),
+      subtitle: Text(groupInfo.district),
     );
   }
 }

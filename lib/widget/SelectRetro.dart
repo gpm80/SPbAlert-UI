@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SelectScatter extends StatefulWidget {
-  SelectScatterState state;
+class SelectRetro extends StatefulWidget {
+  SelectRetroState state;
 
   int getSelected() {
     return state._selected;
@@ -10,50 +9,50 @@ class SelectScatter extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    state = new SelectScatterState();
+    state = new SelectRetroState();
     return state;
   }
 }
 
-class SelectScatterState extends State<SelectScatter> {
-  int _selected = 10;
+class SelectRetroState extends State<SelectRetro> {
+  int _selected = 3;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
-          child: Text('Группировка по локации'),
+          child: Text('Диапазон анализа'),
           padding: EdgeInsets.only(top: 10),
         ),
         RadioListTile(
-          value: 12,
-          title: Text("Подробный"),
+          value: 1,
+          title: Text("1 час"),
           groupValue: _selected,
           activeColor: Colors.red,
           onChanged: _onSelect,
         ),
         RadioListTile(
-          value: 10,
-          title: Text("Средний"),
+          value: 3,
+          title: Text("3 часа"),
           groupValue: _selected,
           activeColor: Colors.yellow,
           onChanged: _onSelect,
         ),
         RadioListTile(
-          value: 9,
-          title: Text("Общий"),
+          value: 12,
+          title: Text("12 часов"),
           groupValue: _selected,
           activeColor: Colors.green,
           onChanged: _onSelect,
         ),
         RadioListTile(
-          value: 7,
-          title: Text("Обширный"),
+          value: 24,
+          title: Text("24 часа"),
           groupValue: _selected,
           activeColor: Colors.blue,
           onChanged: _onSelect,
-        ),
+        )
       ],
     );
   }
