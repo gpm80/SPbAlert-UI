@@ -18,6 +18,7 @@ class InfoViewState extends State<InfoView> {
   final _formKey = GlobalKey<FormState>();
   var _dateTextController = new TextEditingController();
   List<GroupInfo> _listResult = new List<GroupInfo>();
+  SelectScatter _selectScatter = new SelectScatter();
   DateTime _selectedDate;
 
   /// Конструктор
@@ -35,7 +36,6 @@ class InfoViewState extends State<InfoView> {
         Form(
           key: _formKey,
           child: Row(
-//            crossAxisAlignment: CrossAxisAlignment.baseline,
             children: [
               Expanded(
                   child: TextFormField(
@@ -51,20 +51,22 @@ class InfoViewState extends State<InfoView> {
                   child: Text('Получить'),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                      _fetchGroupInfo(_selectedDate);
+                      _fetchGroupInfo(
+                          _selectedDate, _selectScatter.getSelected());
                     }
                   })
             ],
           ),
         ),
-        SelectScatter(),
+        _selectScatter,
         Expanded(child: ViewListResult(_listResult))
       ],
     ));
   }
 
   /// Получает данные
-  _fetchGroupInfo(DateTime dateTime) {
+  _fetchGroupInfo(DateTime dateTime, int scatter) {
+    print('request: scatter $scatter time: $dateTime');
     String uri = 'http://localhost:8080/info/get';
     var _header = {
       'Content-Type': 'application/json',
@@ -72,7 +74,7 @@ class InfoViewState extends State<InfoView> {
       'Accept-Charset': 'utf-8'
     };
     var _body = jsonEncode({
-      'scatter': 11,
+      'scatter': scatter,
       'timePoint': dateTime.toIso8601String(),
       'retroHour': 24
     });

@@ -1,9 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SelectScatter extends StatefulWidget {
+  SelectScatterState state;
+
+  int getSelected() {
+    return state._selected;
+  }
+
   @override
-  createState() => SelectScatterState();
+  State<StatefulWidget> createState() {
+    state = new SelectScatterState();
+    return state;
+  }
 }
 
 class SelectScatterState extends State<SelectScatter> {
