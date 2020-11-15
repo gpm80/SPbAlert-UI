@@ -24,9 +24,12 @@ class SelectScatterState extends State<SelectScatter> {
       children: <Widget>[
         Container(
           child: new Text(
-            'Группировка по локации',
+            'Точность локации',
             style:
-                DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.2),
+            DefaultTextStyle
+                .of(context)
+                .style
+                .apply(fontSizeFactor: 1.3, color: Theme.of(context).primaryColor),
           ),
           padding: EdgeInsets.only(top: 10),
         ),

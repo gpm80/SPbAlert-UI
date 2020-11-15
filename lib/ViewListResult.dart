@@ -24,11 +24,41 @@ class ViewListResult extends StatelessWidget {
   Widget _makeItem(BuildContext context, GroupInfo groupInfo) {
     return ListTile(
       leading: CircleAvatar(
-//        backgroundImage: AssetImage('graphics/fire.png'),
-        backgroundColor: Colors.red,
+        backgroundColor: _chooseColor(groupInfo),
       ),
-      title: Text(groupInfo.types.join(", ")),
-      subtitle: Text(groupInfo.district),
+      title: _makeTitle(groupInfo),
+      subtitle: _makeSubscript(groupInfo),
+    );
+  }
+
+  MaterialColor _chooseColor(GroupInfo info) {
+    if (info.actual > 80) {
+      return Colors.red;
+    } else if (info.actual > 47) {
+      return Colors.yellow;
+    }
+    return Colors.green;
+  }
+
+  Widget _makeTitle(GroupInfo info) {
+    return Container(
+      child: Row(
+        children: [
+          Text('Ситуация: ${info.types.join(", ")}'),
+          Expanded(child: Text('  Количество обращений: ${info.countAlert}')),
+          Text('${info.actual} %'),
+        ],
+      ),
+    );
+  }
+
+  Widget _makeSubscript(GroupInfo info) {
+    return Container(
+      child: Row(
+        children: [
+          Flexible(child: Text('Районы города: ${info.district}')),
+        ],
+      ),
     );
   }
 }

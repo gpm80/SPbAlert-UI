@@ -21,11 +21,20 @@ class InfoViewState extends State<InfoView> {
   SelectScatter _selectScatter = new SelectScatter();
   SelectRetro _selectRetro = new SelectRetro();
   DateTime _selectedDate;
+  bool animate = false;
 
   /// Конструктор
   InfoViewState() {
-    _selectedDate = DateTime.parse('2019-04-01');
+    _selectedDate = DateTime.parse('2019-05-01');
     print('init date: $_selectedDate');
+  }
+
+  _reDrawWidget() async {
+    if (!animate) return;
+    await Future.delayed(const Duration(milliseconds: 5000));
+    _selectedDate = _selectedDate.add(new Duration(minutes: 20));
+    _fetchGroupInfo(_selectedDate, _selectScatter.getSelected(),
+        _selectRetro.getSelected());
   }
 
   @override
@@ -49,12 +58,26 @@ class InfoViewState extends State<InfoView> {
               ),
               _selectScatter,
               _selectRetro,
-              RaisedButton(
-                  child: Text('Получить'),
-                  onPressed: () {
-                    _fetchGroupInfo(_selectedDate, _selectScatter.getSelected(),
-                        _selectRetro.getSelected());
-                  })
+              ButtonBar(
+                children: [
+                  RaisedButton(
+                      padding: EdgeInsets.all(15),
+                      child: Text('Обновить'),
+                      onPressed: () {
+                        _fetchGroupInfo(
+                            _selectedDate,
+                            _selectScatter.getSelected(),
+                            _selectRetro.getSelected());
+                      }),
+                  RaisedButton(
+                      padding: EdgeInsets.all(15),
+                      child: Text(animate ? 'Остановить' : 'Анимация'),
+                      onPressed: () {
+                        animate = !animate;
+                        _reDrawWidget();
+                      }),
+                ],
+              )
             ],
           ),
         ),
@@ -82,6 +105,7 @@ class InfoViewState extends State<InfoView> {
       setState(() {
         _listResult.clear();
         _listResult.addAll(_mapping(value.body));
+        _reDrawWidget();
       });
     }).catchError((onError) {
       print('error: $onError');
@@ -102,7 +126,7 @@ class InfoViewState extends State<InfoView> {
 
   /// Формат даты
   String _formatDate(DateTime dateTime) {
-    return DateFormat('dd-MM-yyyy').format(dateTime);
+    return DateFormat('dd-MM-yyyy HH:mm').format(dateTime);
   }
 
   /// Диалог выбора даты

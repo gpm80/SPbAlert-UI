@@ -14,7 +14,8 @@ void main() {
     ],
     locale: Locale('ru', 'RU'),
     supportedLocales: const <Locale>[Locale('ru', 'RU')],
-    theme: ThemeData.light().copyWith(primaryColor: Color(0xFF007ec5)),
+//    theme: ThemeData.light().copyWith(primaryColor: Color(0xFF007ec5)),
+    theme: ThemeData.light().copyWith(primaryColor: Color(0xFF360058)),
     initialRoute: '/',
     routes: _initRoutes(),
   ));
@@ -23,7 +24,7 @@ void main() {
 /// Инициализация роутов.
 Map<String, WidgetBuilder> _initRoutes() {
   return {
-    '/': (BuildContext context) => View('Главная', () {
+    '/': (BuildContext context) => View('Монитор происшествий города', () {
           return InfoView();
         }),
     '/test': (BuildContext context) => View('Тест', () {

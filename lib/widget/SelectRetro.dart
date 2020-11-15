@@ -24,8 +24,9 @@ class SelectRetroState extends State<SelectRetro> {
         Container(
           child: new Text(
             'Время анализа',
-            style:
-                DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.2),
+            style: DefaultTextStyle.of(context)
+                .style
+                .apply(fontSizeFactor: 1.3, color: Theme.of(context).primaryColor),
           ),
           padding: EdgeInsets.only(top: 10),
         ),
